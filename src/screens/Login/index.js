@@ -11,11 +11,8 @@ import { useTheme } from '../../context/ThemeContext';
 const Login = ({ navigation }) => {
     const { colors, isDark } = useTheme();
     const [form, setForm] = useState({
-        name: '',
         email: '',
         password: '',
-        confirmPassword: '',
-        selectedAvatar: null
     });
     const [isPasswordShown, setIsPasswordShown] = useState(true);
     const [loading, setLoading] = useState(false);

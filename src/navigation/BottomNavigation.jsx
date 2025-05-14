@@ -7,7 +7,7 @@ import {
     widthPercentageToDP as wp,
 } from '../components/Pixel/Index';
 import DeviceInfo from 'react-native-device-info';
-import { Burn, Clubs, Confess, Home, Profile } from '../screens';
+import { Burn, Clubs, Confess, Home, Maditate, Profile } from '../screens';
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import Feather from "react-native-vector-icons/Feather"
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6"
@@ -85,7 +85,19 @@ const TabStack = () => {
                     tabBarLabel: "Konfess",  // ✅ Show label
                 }}
             />
-
+            <Tab.Screen
+                name="meditate"
+                component={Maditate}
+                options={{
+                    headerShown: false,
+                    tabBarIcon: ({ focused, color }) => (
+                        focused
+                            ? <FontAwesome6 name="headphones" size={hp(2.5)} color={color} />
+                            : <Feather name="headphones" size={hp(2.5)} color={color} />
+                    ),
+                    tabBarLabel: "Apologies",  // ✅ Show label
+                }}
+            />
             <Tab.Screen
                 name="Profile"
                 component={Profile}

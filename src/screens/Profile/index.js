@@ -211,11 +211,18 @@ const Profile = () => {
                         disabled={disabled || loading}
                         activeOpacity={0.7}
                     >
-                        {loading ? (
-                            <ActivityIndicator color={COLORS.white} size="large" />
-                        ) : (
-                            <Text style={styles.buttonText}>Logout</Text>
-                        )}
+                        <LinearGradient
+                            colors={['#ff4444', '#cc0000']}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 1, y: 0 }}
+                            style={styles.button}
+                        >
+                            {loading ? (
+                                <ActivityIndicator color={COLORS.white} size="large" />
+                            ) : (
+                                <Text style={styles.buttonText}>Logout</Text>
+                            )}
+                        </LinearGradient>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -357,6 +364,7 @@ const styles = StyleSheet.create({
     settingTitle: {
         fontSize: hp(1.7),
         fontFamily: fontFamily.FONTS.bold,
+        fontWeight: 'bold',
         color: COLORS.darkgray,
     },
     settingSubtext: {
@@ -366,7 +374,6 @@ const styles = StyleSheet.create({
         marginTop: hp(0.3),
     },
     button: {
-        backgroundColor: COLORS.red,
         height: hp(6),
         width: isTablet ? wp(50) : wp(90),
         borderRadius: isTablet ? wp(1) : wp(10),
@@ -379,5 +386,6 @@ const styles = StyleSheet.create({
         fontSize: hp(1.9),
         color: COLORS.white,
         fontFamily: fontFamily.FONTS.Medium,
+        fontWeight: '600'
     },
 });

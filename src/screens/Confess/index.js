@@ -293,19 +293,16 @@ const styles = StyleSheet.create({
     headerTitle: {
         fontSize: hp(3),
         fontFamily: fontFamily.FONTS.bold,
-        color: COLORS.black,
     },
     headerSubtitle: {
         fontSize: hp(1.7),
         fontFamily: fontFamily.FONTS.Medium,
-        color: COLORS.darkgray1,
         marginTop: hp(0.5),
     },
     scrollList: {
         paddingHorizontal: wp('5%'),
     },
     card: {
-        backgroundColor: COLORS.white,
         borderRadius: wp('3%'),
         padding: wp('4%'),
         marginBottom: hp('2%'),
@@ -314,16 +311,13 @@ const styles = StyleSheet.create({
         fontSize: wp('5%'),
         fontFamily: fontFamily.FONTS.bold,
         marginBottom: hp('1%'),
-        color: COLORS.black,
     },
     bodyText: {
         fontSize: wp('4%'),
         lineHeight: hp('2.8%'),
-        color: COLORS.darkgray,
     },
     readMore: {
         fontSize: wp('3.5%'),
-        color: COLORS.BlazeOrange,
         marginTop: hp('1%'),
     },
     metaRow: {
@@ -334,7 +328,6 @@ const styles = StyleSheet.create({
     },
     time: {
         fontSize: wp('3.5%'),
-        color: COLORS.darkgray,
     },
     actions: {
         flexDirection: 'row',
@@ -347,10 +340,8 @@ const styles = StyleSheet.create({
     },
     metaText: {
         fontSize: wp('3.5%'),
-        color: COLORS.darkgray,
     },
     fab: {
-        backgroundColor: COLORS.BlazeOrange,
         width: wp('12%'),
         height: wp('12%'),
         borderRadius: wp('6%'),

@@ -10,6 +10,7 @@ import Burn from "./Burn/index";
 import Confess from "./Confess/index";
 import Profile from "./Profile/index";
 import Clubs from "./Clubs/index";
+import Maditate from "./Meditate/index";
 
 export {
     Splash,
@@ -24,4 +25,5 @@ export {
     Confess,
     Profile,
     Clubs,
+    Maditate
 };
