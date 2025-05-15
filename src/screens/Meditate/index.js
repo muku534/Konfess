@@ -7,7 +7,6 @@ import {
     TouchableOpacity,
     Platform
 } from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -179,12 +178,10 @@ const styles = StyleSheet.create({
     headerTitle: {
         fontSize: hp(3),
         fontFamily: fontFamily.FONTS.bold,
-        color: COLORS.black,
     },
     headerSubtitle: {
         fontSize: hp(1.7),
         fontFamily: fontFamily.FONTS.Medium,
-        color: COLORS.darkgray1,
         marginTop: hp(0.5),
     },
     section: {
@@ -202,7 +199,6 @@ const styles = StyleSheet.create({
     sectionTitle: {
         fontSize: hp(2.1),
         fontFamily: fontFamily.FONTS.bold,
-        color: COLORS.black,
     },
     creditScoreContainer: {
         flexDirection: 'row',
@@ -217,11 +213,12 @@ const styles = StyleSheet.create({
     },
     creditScoreTotal: {
         fontSize: hp(3),
+        fontFamily: fontFamily.FONTS.Medium,
         marginLeft: wp(1),
     },
     lastUpdated: {
-        fontSize: hp(1.6),
-        color: COLORS.gray,
+        fontSize: hp(1.7),
+        fontFamily: fontFamily.FONTS.Medium,
         textAlign: 'center',
     },
     horoscopeContainer: {
@@ -231,23 +228,22 @@ const styles = StyleSheet.create({
         fontSize: hp(3),
         fontFamily: fontFamily.FONTS.bold,
         marginBottom: hp(0.5),
-        color: COLORS.black,
     },
     horoscopeDate: {
         fontSize: hp(1.8),
-        color: COLORS.gray,
+        fontFamily: fontFamily.FONTS.bold,
         marginBottom: hp(1),
     },
     horoscopePrediction: {
         fontSize: hp(2),
+        fontFamily: fontFamily.FONTS.Medium,
         lineHeight: hp(3),
         textAlign: 'center',
-        color: COLORS.black,
     },
     inboxPreview: {
-        fontSize: hp(2),
+        fontSize: hp(1.9),
+        fontFamily: fontFamily.FONTS.Medium,
         textAlign: 'center',
-        color: COLORS.gray,
     },
     sendButton: {
         height: hp(6.5),
@@ -261,6 +257,6 @@ const styles = StyleSheet.create({
     sendButtonText: {
         fontSize: hp(2),
         color: COLORS.white,
-        fontFamily:fontFamily.FONTS.bold
+        fontFamily: fontFamily.FONTS.bold
     },
 });

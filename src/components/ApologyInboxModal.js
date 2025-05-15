@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -15,8 +15,8 @@ import Animated, { FadeInDown } from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from './Pixel/Index';
 import { COLORS, fontFamily } from '../../constants';
-import Button from './Button';
 import { useTheme } from '../context/ThemeContext';
+import ScratchCard from './ScratchCard';
 
 
 const RECEIVED_APOLOGIES = [
@@ -44,105 +44,127 @@ const RECEIVED_APOLOGIES = [
 
 const GUILT_EMOJIS = ['😔', '😥', '😢', '😭', '🙏'];
 
-export default function ApologyInboxModal({ visible, onClose, onAccept }) {
+export default function ApologyInboxModal({ visible, onClose }) {
   const { colors } = useTheme();
+  const [selectedGift, setSelectedGift] = useState(null);
+  const [showScratchCard, setShowScratchCard] = useState(false);
+
+  const handleAccept = (apologyId) => {
+    const apology = RECEIVED_APOLOGIES.find(item => item.id === apologyId);
+    setSelectedGift(apology?.gift);
+    setShowScratchCard(true);
+  };
+
+  const handleScratchClose = () => {
+    setShowScratchCard(false);
+    setSelectedGift(null);
+    onClose(); // Optionally close the main modal too
+  };
+
   return (
-    <Modal
-      visible={visible}
-      transparent
-      animationType="slide"
-      onRequestClose={onClose}
-    >
-      <View style={styles.modalContainer}>
-        <View style={[styles.modalContent, { backgroundColor: colors.background }]}>
-          <LinearGradient
-            colors={[colors.primary, `${colors.primary}00`]}
-            style={styles.headerGradient}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 0, y: 1 }}
-          />
+    <>
+      <Modal
+        visible={visible}
+        transparent
+        animationType="slide"
+        onRequestClose={onClose}
+      >
+        <View style={styles.modalContainer}>
+          <View style={[styles.modalContent, { backgroundColor: colors.background }]}>
+            <LinearGradient
+              colors={[colors.primary, `${colors.primary}00`]}
+              style={styles.headerGradient}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0, y: 1 }}
+            />
 
-          <View style={styles.header}>
-            <TouchableOpacity onPress={onClose}>
-              <Icon name="x" size={hp(3)} color={colors.text} />
-            </TouchableOpacity>
-            <Text style={[styles.headerTitle, { color: colors.text }]}>Received Apologies</Text>
-            <View style={{ width: hp(3) }} />
-          </View>
+            <View style={styles.header}>
+              <TouchableOpacity onPress={onClose}>
+                <Icon name="x" size={hp(3)} color={colors.text} />
+              </TouchableOpacity>
+              <Text style={[styles.headerTitle, { color: colors.text }]}>Received Apologies</Text>
+              <View style={{ width: hp(3) }} />
+            </View>
 
-          <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-            {RECEIVED_APOLOGIES.map((apology, index) => (
-              <Animated.View
-                key={apology.id}
-                entering={FadeInDown.delay(index * 100)}
-                style={[styles.apologyCard, { backgroundColor: colors.surface }]}
-              >
-                <View style={styles.cardHeader}>
-                  <View style={styles.fromContainer}>
-                    <FontAwesome name="heart" size={hp(2.2)} color={COLORS.BlazeOrange} />
-                    <Text style={[styles.fromText, { color: colors.text }]}>From {apology.from}</Text>
+            <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+              {RECEIVED_APOLOGIES.map((apology, index) => (
+                <Animated.View
+                  key={apology.id}
+                  entering={FadeInDown.delay(index * 100)}
+                  style={[styles.apologyCard, { backgroundColor: colors.surface }]}
+                >
+                  <View style={styles.cardHeader}>
+                    <View style={styles.fromContainer}>
+                      <FontAwesome name="heart" size={hp(2.2)} color={COLORS.BlazeOrange} />
+                      <Text style={[styles.fromText, { color: colors.text }]}>From {apology.from}</Text>
+                    </View>
+                    <View style={styles.timeContainer}>
+                      <MaterialIcons name="access-time" size={hp(2)} color={colors.textSecondary} />
+                      <Text style={[styles.timeText, { color: colors.textSecondary }]}>{apology.timestamp}</Text>
+                    </View>
                   </View>
-                  <View style={styles.timeContainer}>
-                    <MaterialIcons name="access-time" size={hp(2)} color={colors.textSecondary} />
-                    <Text style={[styles.timeText, { color: colors.textSecondary }]}>{apology.timestamp}</Text>
+
+                  <View style={styles.guiltLevel}>
+                    <Text style={styles.guiltEmoji}>{GUILT_EMOJIS[apology.guiltLevel - 1]}</Text>
                   </View>
-                </View>
 
-                <View style={styles.guiltLevel}>
-                  <Text style={styles.guiltEmoji}>{GUILT_EMOJIS[apology.guiltLevel - 1]}</Text>
-                </View>
+                  <Text style={[styles.reasonText, { color: colors.text }]}>{apology.reason}</Text>
 
-                <Text style={[styles.reasonText, { color: colors.text }]}>{apology.reason}</Text>
+                  <View style={[styles.section, { backgroundColor: `${colors.primary}22` }]}>
+                    <Text style={[styles.sectionTitle, { color: colors.text }]}>Their Promise</Text>
+                    <Text style={[styles.sectionText, { color: colors.textSecondary }]}>{apology.promise}</Text>
+                  </View>
 
-                <View style={[styles.section, { backgroundColor: `${colors.primary}22` }]}>
-                  <Text style={[styles.sectionTitle, { color: colors.text }]}>Their Promise</Text>
-                  <Text style={[styles.sectionText, { color: colors.textSecondary }]}>{apology.promise}</Text>
-                </View>
+                  <View style={[styles.giftSection, { backgroundColor: `${colors.primary}22` }]}>
+                    <FontAwesome name="gift" size={hp(2.2)} color={COLORS.BlazeOrange} />
+                    <Text style={[styles.giftText, { color: colors.text }]}>{apology.gift}</Text>
+                  </View>
 
-                <View style={[styles.giftSection, { backgroundColor: `${colors.primary}22` }]}>
-                  <FontAwesome name="gift" size={hp(2.2)} color={COLORS.BlazeOrange} />
-                  <Text style={[styles.giftText, { color: colors.text }]}>{apology.gift}</Text>
-                </View>
-
-                {apology.status === 'pending' && (
-                  <View style={styles.actions}>
-                    <TouchableOpacity
-                      style={styles.button}
-                      onPress={() => onAccept(apology.id)}
-                      activeOpacity={0.5}
-                    >
-                      <LinearGradient
-                        colors={[COLORS.BlazeOrange, COLORS.black]}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
+                  {apology.status === 'pending' && (
+                    <View style={styles.actions}>
+                      <TouchableOpacity
                         style={styles.button}
+                        onPress={() => handleAccept(apology.id)}
+                        activeOpacity={0.5}
                       >
+                        <LinearGradient
+                          colors={[COLORS.BlazeOrange, COLORS.black]}
+                          start={{ x: 0, y: 0 }}
+                          end={{ x: 1, y: 0 }}
+                          style={styles.button}
+                        >
 
-                        <Text style={styles.buttonText}><Icon name="check" size={hp(2.2)} color={colors.text} />  Accept Apology</Text>
+                          <Text style={styles.buttonText}><Icon name="check" size={hp(2.2)} color={colors.text} />  Accept Apology</Text>
 
-                      </LinearGradient>
-                    </TouchableOpacity>
-                    {/* <Button
+                        </LinearGradient>
+                      </TouchableOpacity>
+                      {/* <Button
                       title="Accept Apology"
                       onPress={() => onAccept(apology.id)}
                       icon={<Icon name="check" size={hp(2.2)} color={colors.text} />}
                       containerStyle={styles.acceptButton}
                     /> */}
-                  </View>
-                )}
+                    </View>
+                  )}
 
-                {apology.status === 'accepted' && (
-                  <View style={styles.acceptedBadge}>
-                    <Icon name="check" size={hp(2)} color={COLORS.BlazeOrange} />
-                    <Text style={[styles.acceptedText, { color: colors.text }]}>Accepted</Text>
-                  </View>
-                )}
-              </Animated.View>
-            ))}
-          </ScrollView>
+                  {apology.status === 'accepted' && (
+                    <View style={styles.acceptedBadge}>
+                      <Icon name="check" size={hp(2)} color={COLORS.BlazeOrange} />
+                      <Text style={[styles.acceptedText, { color: colors.text }]}>Accepted</Text>
+                    </View>
+                  )}
+                </Animated.View>
+              ))}
+            </ScrollView>
+          </View>
         </View>
-      </View>
-    </Modal>
+      </Modal>
+
+      {/* ScratchCard as Modal */}
+      {showScratchCard && (
+        <ScratchCard visible={showScratchCard} onClose={handleScratchClose} gift={selectedGift} />
+      )}
+    </>
   );
 }
 
